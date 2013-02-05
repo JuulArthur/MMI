@@ -118,17 +118,30 @@ public class PersonPanel extends JPanel implements ChangeListener{
 			setModel(model);
 		}
 	}
+	public void setNameField(String name){
+		fieldName.setName(name);
+	}
 	
 	public void setModel(Person model){
+		this.model=model;
 		model.setName(fieldName.getText());
 		model.setEmail(fieldEmail.getText());
 		model.setDateOfBirth(fieldBirthday.getText());
 		model.setGender((Gender)fieldGender.getSelectedItem());
 		model.setHeight(fieldHeight.getValue());
-		this.model=model;
+	}
+	
+	public void getModel(){
+		model=this.model;
+		fieldName.setText(model.getName());
+		fieldEmail.setText(model.getEmail());
+		fieldBirthday.setText(model.getDateOfBirth());
+		fieldGender.setSelectedItem(model.getGender());
+		fieldHeight.setValue(model.getHeight());
 	}
 	
 	public void getModel(Person model){
+		this.model=model;
 		fieldName.setText(model.getName());
 		fieldEmail.setText(model.getEmail());
 		fieldBirthday.setText(model.getDateOfBirth());
