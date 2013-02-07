@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -42,7 +43,7 @@ public class PersonListPanel extends JPanel{
 		myList.setSelectionModel(myListSelectionModel);
 		myList.addListSelectionListener(new listSelectionAction());
 		myList.setName("PersonList");
-		myList.setFixedCellWidth(50);
+		myList.setFixedCellWidth(80);
 		
 		personPanel = new PersonPanel();
 		personPanel.setName("PersonPanel");
@@ -54,6 +55,9 @@ public class PersonListPanel extends JPanel{
 		deletePerson = new JButton("Delete Person");
 		deletePerson.addActionListener(new DeletePerson());
 		deletePerson.setName("DeletePersonButton");
+		
+		 ListCellRenderer renderer = new PersonRenderer();
+		 myList.setCellRenderer(renderer);
 		
 		setLayout(new BorderLayout());
 		add(myList,BorderLayout.WEST);
