@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,7 +22,8 @@ public class PersonListPanel extends JPanel{
 	private DefaultListModel model;
 	private DefaultListSelectionModel myListSelectionModel;
 	private PersonPanel personPanel;
-	private JToggleButton createPerson, deletePerson;
+	private JButton createPerson, deletePerson;
+	private PersonRenderer test;
 	
 	public PersonListPanel(){
 		model = new DefaultListModel();
@@ -40,15 +42,16 @@ public class PersonListPanel extends JPanel{
 		myList.setSelectionModel(myListSelectionModel);
 		myList.addListSelectionListener(new listSelectionAction());
 		myList.setName("PersonList");
+		myList.setFixedCellWidth(50);
 		
 		personPanel = new PersonPanel();
 		personPanel.setName("PersonPanel");
 		
-		createPerson = new JToggleButton("Create person");
+		createPerson = new JButton("Create person");
 		createPerson.addActionListener(new CreateNewPerson());
 		createPerson.setName("NewPersonButton");
 		
-		deletePerson = new JToggleButton("Delete Person");
+		deletePerson = new JButton("Delete Person");
 		deletePerson.addActionListener(new DeletePerson());
 		deletePerson.setName("DeletePersonButton");
 		
@@ -63,7 +66,7 @@ public class PersonListPanel extends JPanel{
 		public void valueChanged(ListSelectionEvent e) {
 			if(!myListSelectionModel.isSelectionEmpty()){
 				int i = myListSelectionModel.getAnchorSelectionIndex();
-				personPanel.getModel((Person)model.elementAt(i));
+				personPanel.getFields((Person)model.elementAt(i));
 			}
 			
 		}
@@ -75,19 +78,26 @@ public class PersonListPanel extends JPanel{
 			personPanel.setModel(person);
 			model.addElement(person);
 			myList.setSelectedValue(person, false);
+			System.out.println("lagerPerson");
 		}
 	}
 	
 	public class DeletePerson implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-//			if(!myListSelectionModel.isSelectionEmpty()){
-//				int i = myListSelectionModel.getAnchorSelectionIndex();
-//				model.remove(i);
-//				if(!model.isEmpty()){
-//					myList.setSelectedValue((Person)model.elementAt(0), false);
-//				}
-//			}
-			personPanel.setNameField("h");
+			if(!myListSelectionModel.isSelectionEmpty()){
+				int i = myListSelectionModel.getAnchorSelectionIndex();
+				model.remove(i);
+				if(!model.isEmpty()){
+					myList.setSelectedValue((Person)model.elementAt(0), false);
+				}
+				else{
+					System.out.println("inne");
+					//personPanel.setNameField("");
+					personPanel.setModel(new Person("skjeder"));
+					personPanel.getFields();
+					System.out.println(personPanel.getNameField());
+				}
+			}
 		}
 	}
 	
@@ -96,7 +106,7 @@ public class PersonListPanel extends JPanel{
 		myList.setModel(this.model);
 	}
 	
-	public DefaultListModel getModel(){
+	public DefaultListModel getFields(){
 		return this.model;
 	}
 	

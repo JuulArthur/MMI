@@ -119,7 +119,11 @@ public class PersonPanel extends JPanel implements ChangeListener{
 		}
 	}
 	public void setNameField(String name){
-		fieldName.setName(name);
+		fieldName.setText(name);
+	}
+	
+	public String getNameField(){
+		return fieldName.getText();
 	}
 	
 	public void setModel(Person model){
@@ -131,16 +135,19 @@ public class PersonPanel extends JPanel implements ChangeListener{
 		model.setHeight(fieldHeight.getValue());
 	}
 	
-	public void getModel(){
-		model=this.model;
-		fieldName.setText(model.getName());
-		fieldEmail.setText(model.getEmail());
-		fieldBirthday.setText(model.getDateOfBirth());
-		fieldGender.setSelectedItem(model.getGender());
-		fieldHeight.setValue(model.getHeight());
+	public void getFields(){
+		fieldName.setText(this.model.getName());
+		fieldEmail.setText(this.model.getEmail());
+		fieldBirthday.setText(this.model.getDateOfBirth());
+		fieldGender.setSelectedItem(this.model.getGender());
+		fieldHeight.setValue(this.model.getHeight());
 	}
 	
-	public void getModel(Person model){
+	public Person getModel(){
+		return this.model;
+	}
+	
+	public void getFields(Person model){
 		this.model=model;
 		fieldName.setText(model.getName());
 		fieldEmail.setText(model.getEmail());
